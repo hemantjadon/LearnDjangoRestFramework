@@ -1,9 +1,21 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from django.contrib.auth.models import User
 from quickstart.serializers import *
-from rest_framework import routers
+
+from rest_framework import viewsets
+from rest_framework import generics
 
 # Create your views here.
+
+class UserList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserBaseSerializer
+
+
+class UserDetail(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserBaseSerializer
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -19,7 +31,3 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-
-router = routers.DefaultRouter()
-router.register(r'^users', UserViewSet)
-router.register(r'^groups', GroupViewSet)

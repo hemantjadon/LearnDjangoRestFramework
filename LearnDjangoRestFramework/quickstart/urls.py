@@ -1,11 +1,7 @@
 from django.conf.urls import url,include
-from quickstart.views import UserViewSet,GroupViewSet
-from rest_framework import routers
-
-router = routers.DefaultRouter()
-router.register('users',UserViewSet)
-router.register('groups',GroupViewSet)
+from quickstart import views
 
 urlpatterns = [
-    url(r'^',include(router.urls)),
+	url(r'^users/$', views.UserList.as_view()),
+	url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
 ]

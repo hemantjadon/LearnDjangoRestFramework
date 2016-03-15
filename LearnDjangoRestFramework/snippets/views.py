@@ -8,22 +8,26 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser,IsAuthenticatedOrReadOnly
 from rest_framework import mixins
 from rest_framework import generics
 
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
+from snippets.permissions import IsOwnerOrReadOnly
 
 # Create your views here.
 
 class SnippetList(generics.ListCreateAPIView):
-	permission_classes = [IsAdminUser]
+	permission_classes = [IsAuthenticatedOrReadOnly]
 	queryset = Snippet.objects.all()
 	serializer_class = SnippetSerializer
+	
+	def perform_create(self, serializer):
+		serializer.save(owner=self.request.user)
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
-	permission_classes = [IsAdminUser]
+	permission_classes = [IsOwnerOrReadOnly]
 	queryset = Snippet.objects.all()
 	serializer_class = SnippetSerializer
 		

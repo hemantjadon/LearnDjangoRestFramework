@@ -13,9 +13,9 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ('url', 'name')
 
-class UserBaseSerializer(serializers.ModelSerializer):
+class UserBaseSerializer(serializers.HyperlinkedModelSerializer):
     snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
 
     class Meta:
         model = User
-        fields = ('id', 'username','email' ,'snippets','is_staff')
+        fields = ('url','id', 'username','email' ,'snippets','is_staff')

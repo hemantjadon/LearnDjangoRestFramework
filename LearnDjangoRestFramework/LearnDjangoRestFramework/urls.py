@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from .rest_routing import router
+from .views import APIRoot
 
 urlpatterns = [
+	url(r'^$',APIRoot.as_view()),
 	url(r'^',include('snippets.urls')),
 	url(r'^',include('quickstart.urls')),
-	url(r'^rest_api/',include(router.urls)),
+	#url(r'^rest_api/',include(router.urls)),
 	url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 	url(r'^admin/', include(admin.site.urls)),
 ]

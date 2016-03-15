@@ -34,7 +34,7 @@ class SnippetDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.Des
 	serializer_class = SnippetSerializer
 		
 	def get(self,request,*args,**kwargs):
-		return self.retrive(request,*args,**kwargs)
+		return self.retrieve(request,*args,**kwargs)
 	
 	def put(self,request,*args,**kwargs):
 		return self.update(request,*args,**kwargs)
